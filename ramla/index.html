@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maza-Wajé Services — Prestataires à Niamey</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght=300;400;500;600;700;800&family=Inter:wght=300;400;500;600&display=swap');
+
+  :root {
+    --rouge: #C0392B;
+    --rouge-sombre: #96281B;
+    --rouge-clair: #E8453C;
+    --gris: #2C2C2C;
+    --gris-moyen: #555;
+    --gris-clair: #F5F5F5;
+    --blanc: #FFFFFF;
+    --bordure: #E0E0E0;
+    --ombre: 0 4px 24px rgba(0,0,0,0.08);
+    --radius: 12px;
+    --transition: all 0.25s ease;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--gris);
+    background: var(--blanc);
+    line-height: 1.6;
+  }
+
+  /* ===== NAVBAR ===== */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--gris);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--blanc);
+    letter-spacing: -0.5px;
+  }
+
+  .nav-logo span { color: var(--rouge-clair); }
+
+  .nav-links {
+    display: flex; gap: 1.5rem; list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition);
+  }
+
+  .nav-links a:hover { color: var(--blanc); }
+
+  .nav-cta {
+    background: var(--rouge);
+    color: var(--blanc) !important;
+    padding: 0.45rem 1.1rem;
+    border-radius: 6px;
+    font-weight: 600 !important;
+  }
+
+  .nav-cta:hover { background: var(--rouge-sombre); color: var(--blanc) !important; }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, var(--gris) 0%, #1a1a1a 100%);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(192,57,43,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(192,57,43,0.2);
+    border: 1px solid rgba(192,57,43,0.4);
+    color: #E87065;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 800;
+    color: var(--blanc);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--rouge-clair);
+  }
+
+  .hero p {
+    color: rgba(255,255,255,0.65);
+    font-size: 1.05rem;
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+  }
+
+  /* Barre de recherche */
+  .search-bar {
+    max-width: 620px;
+    margin: 0 auto;
+    display: flex;
+    background: var(--blanc);
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  }
+
+  .search-bar select {
+    border: none;
+    outline: none;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--gris);
+    background: transparent;
+    min-width: 180px;
+    cursor: pointer;
+    border-right: 1px solid var(--bordure);
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .search-bar input {
+    border: none;
+    outline: none;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    flex: 1;
+    color: var(--gris);
+  }
+
+  .search-bar button {
+    background: var(--rouge);
+    color: var(--blanc);
+    border: none;
+    padding: 0 1.8rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+  }
+
+  .search-bar button:hover { background: var(--rouge-sombre); }
+
+  /* Stats */
+  .hero-stats {
+    display: flex; justify-content: center; gap: 3rem;
+    margin-top: 3rem;
+  }
+
+  .hero-stats div { text-align: center; }
+  .hero-stats strong {
+    display: block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--blanc);
+  }
+  .hero-stats span {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== MÉTIERS RAPIDES ===== */
+  .metiers-rapides {
+    padding: 2.5rem 2rem;
+    background: var(--gris-clair);
+    border-bottom: 1px solid var(--bordure);
+  }
+
+  .metiers-rapides-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center;
+  }
+
+  .tag-metier {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: var(--blanc);
+    border: 1.5px solid var(--bordure);
+    padding: 0.55rem 1.1rem;
+    border-radius: 50px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--gris);
+    text-decoration: none;
+  }
+
+  .tag-metier:hover, .tag-metier.active {
+    border-color: var(--rouge);
+    color: var(--rouge);
+    background: rgba(192,57,43,0.05);
+  }
+
+  .tag-metier .icone { font-size: 1.1rem; }
+
+  /* ===== CATALOGUE ===== */
+  .catalogue {
+    max-width: 1100px; margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--gris);
+  }
+
+  .section-title span { color: var(--rouge); }
+
+  .tri-select {
+    border: 1.5px solid var(--bordure);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.88rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--gris);
+    cursor: pointer;
+    outline: none;
+  }
+
+  /* Grille prestataires */
+  .grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .carte {
+    background: var(--blanc);
+    border: 1.5px solid var(--bordure);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--ombre);
+  }
+
+  .carte:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.12);
+    border-color: var(--rouge);
+  }
+
+  .carte-header {
+    background: linear-gradient(135deg, var(--gris) 0%, #3a3a3a 100%);
+    padding: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    position: relative;
+  }
+
+  .avatar {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255,255,255,0.2);
+    background: var(--rouge);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--blanc);
+    flex-shrink: 0;
+  }
+
+  .carte-nom {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--blanc);
+  }
+
+  .carte-metier {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 2px;
+  }
+
+  .badge-dispo {
+    position: absolute; top: 1rem; right: 1rem;
+    background: #27AE60;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-indispo { background: #95a5a6; }
+
+  .carte-body { padding: 1.2rem 1.5rem; }
+
+  .carte-info {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .info-pill {
+    display: flex; align-items: center; gap: 0.3rem;
+    background: var(--gris-clair);
+    border-radius: 6px;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+    color: var(--gris-moyen);
+  }
+
+  .etoiles {
+    display: flex; align-items: center; gap: 0.35rem;
+    margin-bottom: 1rem;
+  }
+
+  .etoiles-stars { color: #F39C12; font-size: 0.95rem; }
+  .etoiles-score { font-weight: 600; font-size: 0.88rem; }
+  .etoiles-count { color: var(--gris-moyen); font-size: 0.82rem; }
+
+  .carte-tarif {
+    display: flex; align-items: baseline; gap: 0.3rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .tarif-montant {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--rouge);
+  }
+
+  .tarif-unite { font-size: 0.82rem; color: var(--gris-moyen); }
+
+  .carte-actions {
+    display: flex; gap: 0.6rem;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    border: none;
+    transition: var(--transition);
+    text-align: center;
+  }
+
+  .btn-primary {
+    background: var(--rouge);
+    color: var(--blanc);
+  }
+
+  .btn-primary:hover { background: var(--rouge-sombre); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--gris);
+    border: 1.5px solid var(--bordure);
+  }
+
+  .btn-outline:hover { border-color: var(--gris); background: var(--gris-clair); }
+
+  /* ===== MODAL PROFIL ===== */
+  .overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 200;
+    align-items: center; justify-content: center;
+    padding: 1rem;
+    backdrop-filter: blur(4px);
+  }
+
+  .overlay.actif { display: flex; }
+
+  .modal {
+    background: var(--blanc);
+    border-radius: 16px;
+    max-width: 560px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+  }
+
+  .modal-hero {
+    background: linear-gradient(135deg, var(--gris) 0%, #1a1a1a 100%);
+    padding: 2rem;
+    display: flex; align-items: center; gap: 1.5rem;
+    position: relative;
+  }
+
+  .modal-avatar {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: var(--rouge);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+    border: 3px solid rgba(255,255,255,0.2);
+  }
+
+  .modal-titre { color: white; }
+  .modal-titre h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+  .modal-titre p { color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-top: 4px; }
+
+  .modal-fermer {
+    position: absolute; top: 1rem; right: 1rem;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: var(--transition);
+  }
+
+  .modal-fermer:hover { background: rgba(255,255,255,0.25); }
+
+  .modal-body { padding: 1.5rem 2rem 2rem; }
+
+  .modal-section { margin-bottom: 1.5rem; }
+  .modal-section h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--rouge);
+    margin-bottom: 0.75rem;
+  }
+
+  .modal-infos-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .info-item {
+    background: var(--gris-clair);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+  }
+
+  .info-item label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--gris-moyen);
+    margin-bottom: 2px;
+  }
+
+  .info-item strong {
+    font-size: 0.92rem;
+    color: var(--gris);
+    font-weight: 600;
+  }
+
+  /* Avis */
+  .avis-liste { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .avis-item {
+    background: var(--gris-clair);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.88rem;
+  }
+
+  .avis-meta {
+    display: flex; justify-content: space-between;
+    margin-bottom: 0.3rem;
+  }
+
+  .avis-auteur { font-weight: 600; }
+  .avis-note { color: #F39C12; }
+
+  .modal-footer {
+    display: flex; gap: 0.75rem;
+    padding: 0 2rem 1.5rem;
+  }
+
+  /* ===== FORMULAIRE DEVIS ===== */
+  .overlay-devis { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 300; align-items: center; justify-content: center; padding: 1rem; backdrop-filter: blur(4px); }
+  .overlay-devis.actif { display: flex; }
+
+  .modal-devis {
+    background: var(--blanc);
+    border-radius: 16px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+  }
+
+  .modal-devis-header {
+    background: var(--rouge);
+    padding: 1.5rem 2rem;
+    color: white;
+    border-radius: 16px 16px 0 0;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .modal-devis-header h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  .modal-devis-header button {
+    background: rgba(255,255,255,0.2);
+    border: none; color: white; cursor: pointer;
+    width: 30px; height: 30px; border-radius: 50%;
+    font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  }
+
+  .modal-devis-body { padding: 1.5rem 2rem 2rem; }
+
+  .form-groupe { margin-bottom: 1.2rem; }
+  .form-groupe label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gris);
+    margin-bottom: 0.4rem;
+  }
+
+  .form-groupe input,
+  .form-groupe textarea,
+  .form-groupe select {
+    width: 100%;
+    border: 1.5px solid var(--bordure);
+    border-radius: 8px;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.92rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--gris);
+    outline: none;
+    transition: var(--transition);
+  }
+
+  .form-groupe input:focus,
+  .form-groupe textarea:focus,
+  .form-groupe select:focus {
+    border-color: var(--rouge);
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.1);
+  }
+
+  .form-groupe textarea { resize: vertical; min-height: 90px; }
+
+  /* ===== CHAT ===== */
+  .chat-flottant {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 150;
+  }
+
+  .chat-btn {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--rouge);
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(192,57,43,0.4);
+    transition: var(--transition);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .chat-btn:hover { background: var(--rouge-sombre); transform: scale(1.08); }
+
+  .chat-fenetre {
+    display: none;
+    position: absolute;
+    bottom: 70px; right: 0;
+    width: 320px;
+    background: var(--blanc);
+    border-radius: 16px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.18);
+    overflow: hidden;
+    border: 1.5px solid var(--bordure);
+  }
+
+  .chat-fenetre.ouverte { display: block; }
+
+  .chat-entete {
+    background: var(--gris);
+    padding: 1rem 1.2rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+
+  .chat-entete-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--rouge);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    color: white;
+    font-weight: 700;
+  }
+
+  .chat-entete-info h4 {
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .chat-entete-info span {
+    color: rgba(255,255,255,0.55);
+    font-size: 0.75rem;
+  }
+
+  .chat-messages {
+    height: 240px;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex; flex-direction: column; gap: 0.75rem;
+    background: #FAFAFA;
+  }
+
+  .msg {
+    max-width: 80%;
+    padding: 0.6rem 0.9rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .msg-eux {
+    background: var(--blanc);
+    border: 1px solid var(--bordure);
+    align-self: flex-start;
+    border-radius: 4px 12px 12px 12px;
+  }
+
+  .msg-moi {
+    background: var(--rouge);
+    color: white;
+    align-self: flex-end;
+    border-radius: 12px 12px 4px 12px;
+  }
+
+  .chat-saisie {
+    display: flex;
+    border-top: 1px solid var(--bordure);
+    background: white;
+  }
+
+  .chat-saisie input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0.75rem 1rem;
+    font-size: 0.88rem;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .chat-saisie button {
+    background: var(--rouge);
+    color: white;
+    border: none;
+    padding: 0 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: var(--transition);
+  }
+
+  .chat-saisie button:hover { background: var(--rouge-sombre); }
+
+  /* ===== INSCRIPTION PRESTATAIRE ===== */
+  .inscription-section {
+    background: linear-gradient(135deg, var(--gris) 0%, #1a1a1a 100%);
+    padding: 5rem 2rem;
+  }
+
+  .inscription-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .inscription-titre {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .inscription-titre h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--blanc);
+    margin-bottom: 0.5rem;
+  }
+
+  .inscription-titre p { color: rgba(255,255,255,0.55); }
+
+  .form-inscription {
+    background: var(--blanc);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.25);
+  }
+
+  .form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .upload-zone {
+    border: 2px dashed var(--bordure);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+  }
+
+  .upload-zone:hover { border-color: var(--rouge); background: rgba(192,57,43,0.03); }
+
+  .upload-zone input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer;
+    width: 100%; height: 100%;
+  }
+
+  .upload-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .upload-zone p { font-size: 0.85rem; color: var(--gris-moyen); }
+
+  .tarif-groupe {
+    display: flex;
+    border: 1.5px solid var(--bordure);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .tarif-groupe input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.92rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--gris);
+  }
+
+  .tarif-groupe select {
+    border: none;
+    border-left: 1.5px solid var(--bordure);
+    outline: none;
+    padding: 0.7rem 0.6rem;
+    font-size: 0.88rem;
+    font-family: 'Inter', sans-serif;
+    background: var(--gris-clair);
+    color: var(--gris);
+    cursor: pointer;
+  }
+
+  .success-msg {
+    display: none;
+    background: #E8F5E9;
+    border: 1.5px solid #A5D6A7;
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    color: #2E7D32;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  .success-msg.visible { display: block; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: #111;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.85rem;
+  }
+
+  footer strong { color: var(--rouge-clair); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .hero { padding: 3rem 1.2rem 2.5rem; }
+    .search-bar { flex-direction: column; border-radius: 12px; }
+    .search-bar select { border-right: none; border-bottom: 1px solid var(--bordure); min-width: auto; }
+    .search-bar button { padding: 0.9rem; border-radius: 0; }
+    .hero-stats { gap: 1.5rem; }
+    .form-grid-2 { grid-template-columns: 1fr; }
+    .modal-infos-grid { grid-template-columns: 1fr; }
+    .modal-footer { flex-direction: column; }
+    .chat-flottant { bottom: 1rem; right: 1rem; }
+    .chat-fenetre { width: 290px; }
+    .grille { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Maza-Wajé <span>Services</span></div>
+  <ul class="nav-links">
+    <li><a href="#catalogue">Prestataires</a></li>
+    <li><a href="#inscription">Devenir prestataire</a></li>
+    <li><a href="#" onclick="ouvrirChat(event)">Chat</a></li>
+    <li><a href="mazawaje-services-admin.html" class="nav-cta">Admin</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">📍 Niamey, Niger</div>
+  <h1>Trouvez le bon <em>prestataire</em><br>près de chez vous</h1>
+  <p>Plombiers, électriciens, chauffeurs, réparateurs, jardiniers — vérifiés et disponibles à Niamey.</p>
+
+  <div class="search-bar">
+    <select id="select-metier">
+      <option value="">Tous les métiers</option>
+      <option value="plombier">🔧 Plombier</option>
+      <option value="electricien">⚡ Électricien</option>
+      <option value="chauffeur">🚗 Chauffeur</option>
+      <option value="frigoriste">❄️ Réparateur frigo/clim</option>
+      <option value="jardinier">🌿 Jardinier</option>
+      <option value="menuisier">🪵 Menuisier</option>
+      <option value="peintre">🖌️ Peintre</option>
+    </select>
+    <input type="text" id="search-quartier" placeholder="Quartier ou zone...">
+    <button onclick="filtrer()">Rechercher</button>
+  </div>
+
+  <div class="hero-stats">
+    <div><strong id="stat-prestataires">0</strong><span>Prestataires</span></div>
+    <div><strong>7</strong><span>Métiers</span></div>
+    <div><strong>— ★</strong><span>Note moy.</span></div>
+  </div>
+</section>
+
+<div class="metiers-rapides">
+  <div class="metiers-rapides-inner">
+    <a class="tag-metier active" onclick="filtrerTag('', this)"><span class="icone">✨</span> Tous</a>
+    <a class="tag-metier" onclick="filtrerTag('plombier', this)"><span class="icone">🔧</span> Plombier</a>
+    <a class="tag-metier" onclick="filtrerTag('electricien', this)"><span class="icone">⚡</span> Électricien</a>
+    <a class="tag-metier" onclick="filtrerTag('chauffeur', this)"><span class="icone">🚗</span> Chauffeur</a>
+    <a class="tag-metier" onclick="filtrerTag('frigoriste', this)"><span class="icone">❄️</span> Frigo / Clim</a>
+    <a class="tag-metier" onclick="filtrerTag('jardinier', this)"><span class="icone">🌿</span> Jardinier</a>
+    <a class="tag-metier" onclick="filtrerTag('menuisier', this)"><span class="icone">🪵</span> Menuisier</a>
+    <a class="tag-metier" onclick="filtrerTag('peintre', this)"><span class="icone">🖌️</span> Peintre</a>
+  </div>
+</div>
+
+<section class="catalogue" id="catalogue">
+  <div class="section-header">
+    <h2 class="section-title">Prestataires <span>disponibles</span></h2>
+    <select class="tri-select" onchange="trier(this.value)">
+      <option value="note">Mieux notés</option>
+      <option value="tarif-asc">Tarif croissant</option>
+      <option value="tarif-desc">Tarif décroissant</option>
+    </select>
+  </div>
+  <div class="grille" id="grille-prestataires"></div>
+</section>
+
+<section class="inscription-section" id="inscription">
+  <div class="inscription-inner">
+    <div class="inscription-titre">
+      <h2>Rejoignez la plateforme</h2>
+      <p>Inscrivez-vous gratuitement et développez votre clientèle à Niamey.</p>
+    </div>
+    <div class="form-inscription">
+      <div class="form-grid-2">
+        <div class="form-groupe">
+          <label>Nom complet *</label>
+          <input type="text" id="ins-nom" placeholder="Ex : Moussa Ibrahim">
+        </div>
+        <div class="form-groupe">
+          <label>Téléphone *</label>
+          <input type="tel" id="ins-tel" placeholder="Ex : 97 00 00 00">
+        </div>
+      </div>
+      <div class="form-groupe">
+        <label>Métier *</label>
+        <select id="ins-metier">
+          <option value="">Choisir un métier</option>
+          <option value="plombier">Plombier</option>
+          <option value="electricien">Électricien</option>
+          <option value="chauffeur">Chauffeur</option>
+          <option value="frigoriste">Réparateur frigo / climatiseur</option>
+          <option value="jardinier">Jardinier</option>
+          <option value="menuisier">Menuisier</option>
+          <option value="peintre">Peintre</option>
+        </select>
+      </div>
+      <div class="form-groupe">
+        <label>Zone / Quartier d'intervention *</label>
+        <input type="text" id="ins-zone" placeholder="Ex : Plateau, Niamey 2, Gamkallé...">
+      </div>
+      <div class="form-groupe">
+        <label>Tarif proposé *</label>
+        <div class="tarif-groupe">
+          <input type="number" id="ins-tarif" placeholder="5000">
+          <select id="ins-unite">
+            <option value="heure">F CFA / heure</option>
+            <option value="visite">F CFA / visite</option>
+            <option value="jour">F CFA / jour</option>
+            <option value="forfait">Forfait</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-groupe">
+        <label>Photo de profil</label>
+        <div class="upload-zone" id="upload-zone">
+          <input type="file" id="ins-photo" accept="image/*" onchange="previewPhoto(this)">
+          <div id="upload-contenu">
+            <div class="upload-icon">📷</div>
+            <p>Cliquez pour choisir une photo</p>
+            <p style="font-size:0.78rem; color:#aaa; margin-top:4px;">JPG, PNG — max 5 Mo</p>
+          </div>
+        </div>
+      </div>
+      <div class="form-groupe">
+        <label>Description (facultatif)</label>
+        <textarea id="ins-desc" placeholder="Décrivez votre expérience, vos spécialités..."></textarea>
+      </div>
+      <button class="btn btn-primary" style="width:100%; padding:0.85rem; font-size:0.95rem;" onclick="inscrire()">
+        Envoyer ma demande
+      </button>
+      <div class="success-msg" id="success-ins">
+        ✅ Demande envoyée ! Votre profil a été ajouté avec succès au catalogue.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <strong>Maza-Wajé Services</strong> — Niamey, Niger &nbsp;|&nbsp; Tél : 95 14 32 32 / 92 14 32 32</p>
+</footer>
+
+<div class="overlay" id="overlay-profil" onclick="fermerProfil(event)">
+  <div class="modal" id="modal-profil">
+    <div class="modal-hero">
+      <div class="modal-avatar" id="modal-avatar"></div>
+      <div class="modal-titre">
+        <h2 id="modal-nom"></h2>
+        <p id="modal-metier-titre"></p>
+      </div>
+      <button class="modal-fermer" onclick="fermerModal('overlay-profil')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <h3>Informations</h3>
+        <div class="modal-infos-grid">
+          <div class="info-item"><label>Téléphone</label><strong id="modal-tel"></strong></div>
+          <div class="info-item"><label>Zone d'intervention</label><strong id="modal-zone"></strong></div>
+          <div class="info-item"><label>Tarif</label><strong id="modal-tarif"></strong></div>
+          <div class="info-item"><label>Disponibilité</label><strong id="modal-dispo"></strong></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <h3>À propos</h3>
+        <p id="modal-desc" style="font-size:0.9rem; color:var(--gris-moyen);"></p>
+      </div>
+      <div class="modal-section">
+        <h3>Avis clients</h3>
+        <div class="avis-liste" id="modal-avis"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="ouvrirChatPrestataire()">💬 Envoyer un message</button>
+      <button class="btn btn-primary" onclick="ouvrirDevis()">📋 Demander un devis</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay-devis" id="overlay-devis" onclick="fermerDevisClick(event)">
+  <div class="modal-devis">
+    <div class="modal-devis-header">
+      <h2>📋 Demande de devis</h2>
+      <button onclick="fermerModal('overlay-devis')">✕</button>
+    </div>
+    <div class="modal-devis-body">
+      <div class="form-groupe">
+        <label>Votre nom</label>
+        <input type="text" id="d-nom" placeholder="Ex : Aminata Diallo">
+      </div>
+      <div class="form-groupe">
+        <label>Votre téléphone</label>
+        <input type="tel" id="d-tel" placeholder="Ex : 96 00 00 00">
+      </div>
+      <div class="form-groupe">
+        <label>Type de prestation</label>
+        <input type="text" id="d-prestation" placeholder="Décrivez votre besoin...">
+      </div>
+      <div class="form-groupe">
+        <label>Date souhaitée</label>
+        <input type="date" id="d-date">
+      </div>
+      <div class="form-groupe">
+        <label>Adresse d'intervention</label>
+        <input type="text" id="d-adresse" placeholder="Quartier / rue...">
+      </div>
+      <div class="form-groupe">
+        <label>Message (facultatif)</label>
+        <textarea id="d-message" placeholder="Détails supplémentaires..."></textarea>
+      </div>
+      <button class="btn btn-primary" style="width:100%; padding:0.85rem;" onclick="envoyerDevis()">Envoyer la demande</button>
+      <div class="success-msg" id="success-devis">✅ Demande envoyée ! Le prestataire vous contactera bientôt.</div>
+    </div>
+  </div>
+</div>
+
+<div class="chat-flottant">
+  <div class="chat-fenetre" id="chat-fenetre">
+    <div class="chat-entete">
+      <div class="chat-entete-avatar">MW</div>
+      <div class="chat-entete-info">
+        <h4 id="chat-nom-presta">Support Maza-Wajé</h4>
+        <span>En ligne</span>
+      </div>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="msg msg-eux">Bonjour ! Comment puis-je vous aider ?</div>
+    </div>
+    <div class="chat-saisie">
+      <input type="text" id="chat-input" placeholder="Votre message..." onkeydown="if(event.key==='Enter') envoyerMsg()">
+      <button onclick="envoyerMsg()">➤</button>
+    </div>
+  </div>
+  <button class="chat-btn" onclick="toggleChat()">💬</button>
+</div>
+
+<script>
+// ===== INITIALISATION DES DONNÉES VIERGES =====
+// Utilisation du localStorage pour sauvegarder les prestataires ajoutés
+const prestataires = JSON.parse(localStorage.getItem('mw_prestataires')) || [];
+const avisData = JSON.parse(localStorage.getItem('mw_avis')) || {};
+
+// Mappage des icônes et labels pour les métiers
+const metiersConfig = {
+  plombier: { label: "Plombier", icone: "🔧" },
+  electricien: { label: "Électricien", icone: "⚡" },
+  chauffeur: { label: "Chauffeur", icone: "🚗" },
+  frigoriste: { label: "Réparateur frigo/clim", icone: "❄️" },
+  jardinier: { label: "Jardinier", icone: "🌿" },
+  menuisier: { label: "Menuisier", icone: "🪵" },
+  peintre: { label: "Peintre", icone: "🖌️" }
+};
+
+let prestatairesAffiches = [...prestataires];
+let prestataireCourant = null;
+
+function initiales(nom) {
+  if (!nom) return "??";
+  return nom.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2);
+}
+
+function etoiles(note) {
+  if (!note) return '☆☆☆☆☆';
+  const plein = Math.floor(note);
+  const demi = note % 1 >= 0.5 ? 1 : 0;
+  return '★'.repeat(plein) + (demi ? '½' : '') + '•'.repeat(5 - plein - demi);
+}
+
+function renderCarte(p) {
+  const config = metiersConfig[p.metier] || { label: p.metier, icone: "💼" };
+  const unite = {heure:'/ heure', visite:'/ visite', jour:'/ jour', forfait:'forfait'}[p.unite] || '';
+  const noteAffichee = p.note ? p.note : '—';
+  
+  return `
+    <div class="carte" onclick="ouvrirProfil(${p.id})">
+      <div class="carte-header">
+        <div class="avatar">${initiales(p.nom)}</div>
+        <div>
+          <div class="carte-nom">${p.nom}</div>
+          <div class="carte-metier">${config.icone} ${config.label}</div>
+        </div>
+        <div class="badge-dispo ${p.dispo ? '' : 'badge-indispo'}">${p.dispo ? 'Disponible' : 'Occupé'}</div>
+      </div>
+      <div class="carte-body">
+        <div class="carte-info">
+          <div class="info-pill">📍 ${p.zone}</div>
+        </div>
+        <div class="etoiles">
+          <span class="etoiles-stars">${etoiles(p.note)}</span>
+          <span class="etoiles-score">${noteAffichee}</span>
+          <span class="etoiles-count">(${p.avis || 0} avis)</span>
+        </div>
+        <div class="carte-tarif">
+          <span class="tarif-montant">${Number(p.tarif).toLocaleString('fr-FR')}</span>
+          <span class="tarif-unite">F CFA ${unite}</span>
+        </div>
+        <div class="carte-actions">
+          <button class="btn btn-outline" onclick="event.stopPropagation(); ouvrirChatId(${p.id})">💬 Message</button>
+          <button class="btn btn-primary" onclick="event.stopPropagation(); ouvrirProfil(${p.id}); setTimeout(ouvrirDevis, 100)">Devis →</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderGrille() {
+  const g = document.getElementById('grille-prestataires');
+  document.getElementById('stat-prestataires').textContent = prestataires.length;
+  
+  if (prestatairesAffiches.length === 0) {
+    g.innerHTML = '<p style="color:var(--gris-moyen); padding:2rem 0; grid-column:1/-1; text-align:center;">Aucun prestataire disponible pour le moment.</p>';
+    return;
+  }
+  g.innerHTML = prestatairesAffiches.map(renderCarte).join('');
+}
+
+function filtrer() {
+  const metier = document.getElementById('select-metier').value;
+  const quartier = document.getElementById('search-quartier').value.toLowerCase();
+  prestatairesAffiches = prestataires.filter(p =>
+    (!metier || p.metier === metier) &&
+    (!quartier || p.zone.toLowerCase().includes(quartier))
+  );
+  renderGrille();
+}
+
+function filtrerTag(metier, el) {
+  document.querySelectorAll('.tag-metier').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  prestatairesAffiches = metier ? prestataires.filter(p => p.metier === metier) : [...prestataires];
+  renderGrille();
+  document.getElementById('catalogue').scrollIntoView({behavior:'smooth'});
+}
+
+function trier(val) {
+  if (prestatairesAffiches.length === 0) return;
+  if (val === 'note') prestatairesAffiches.sort((a,b) => (b.note || 0) - (a.note || 0));
+  if (val === 'tarif-asc') prestatairesAffiches.sort((a,b) => a.tarif - b.tarif);
+  if (val === 'tarif-desc') prestatairesAffiches.sort((a,b) => b.tarif - a.tarif);
+  renderGrille();
+}
+
+function ouvrirProfil(id) {
+  const p = prestataires.find(x => x.id === id);
+  if (!p) return;
+  prestataireCourant = p;
+
+  const config = metiersConfig[p.metier] || { label: p.metier, icone: "💼" };
+
+  document.getElementById('modal-avatar').textContent = initiales(p.nom);
+  document.getElementById('modal-nom').textContent = p.nom;
+  document.getElementById('modal-metier-titre').textContent = `${config.icone} ${config.label}`;
+  document.getElementById('modal-tel').textContent = p.tel;
+  document.getElementById('modal-zone').textContent = p.zone;
+  document.getElementById('modal-tarif').textContent = `${Number(p.tarif).toLocaleString('fr-FR')} F CFA / ${p.unite}`;
+  document.getElementById('modal-dispo').textContent = p.dispo ? '✅ Disponible' : '⏳ Occupé';
+  document.getElementById('modal-desc').textContent = p.desc || "Aucune description fournie.";
+
+  const avisListe = (avisData[id] || []).map(a => `
+    <div class="avis-item">
+      <div class="avis-meta">
+        <span class="avis-auteur">${a.auteur}</span>
+        <span class="avis-note">${a.note}</span>
+      </div>
+      <div>${a.texte}</div>
+    </div>
+  `).join('') || '<p style="color:var(--gris-moyen); font-size:0.88rem;">Aucun avis pour le moment.</p>';
+
+  document.getElementById('modal-avis').innerHTML = avisListe;
+  document.getElementById('overlay-profil').classList.add('actif');
+}
+
+function fermerProfil(e) {
+  if (e.target === document.getElementById('overlay-profil')) {
+    fermerModal('overlay-profil');
+  }
+}
+
+function fermerModal(id) {
+  document.getElementById(id).classList.remove('actif');
+}
+
+function ouvrirDevis() {
+  document.getElementById('overlay-devis').classList.add('actif');
+  if (prestataireCourant) {
+    const config = metiersConfig[prestataireCourant.metier] || { label: "" };
+    document.getElementById('d-prestation').placeholder = `Demande pour ${config.label.toLowerCase()}...`;
+  }
+}
+
+function fermerDevisClick(e) {
+  if (e.target === document.getElementById('overlay-devis')) {
+    fermerModal('overlay-devis');
+  }
+}
+
+function envoyerDevis() {
+  const nom = document.getElementById('d-nom').value.trim();
+  const tel = document.getElementById('d-tel').value.trim();
+  if (!nom || !tel) { alert('Veuillez renseigner votre nom et téléphone.'); return; }
+  document.getElementById('success-devis').classList.add('visible');
+  setTimeout(() => {
+    document.getElementById('success-devis').classList.remove('visible');
+    fermerModal('overlay-devis');
+  }, 3000);
+}
+
+// Chat
+function toggleChat() {
+  document.getElementById('chat-fenetre').classList.toggle('ouverte');
+}
+
+function ouvrirChat(e) {
+  e && e.preventDefault();
+  document.getElementById('chat-fenetre').classList.add('ouverte');
+}
+
+function ouvrirChatPrestataire() {
+  if (prestataireCourant) {
+    document.getElementById('chat-nom-presta').textContent = prestataireCourant.nom;
+    fermerModal('overlay-profil');
+  }
+  document.getElementById('chat-fenetre').classList.add('ouverte');
+}
+
+function ouvrirChatId(id) {
+  const p = prestataires.find(x => x.id === id);
+  if (p) {
+    prestataireCourant = p;
+    document.getElementById('chat-nom-presta').textContent = p.nom;
+    const msg = document.getElementById('chat-messages');
+    msg.innerHTML = `<div class="msg msg-eux">Bonjour, je suis ${p.nom}. Comment puis-je vous aider ?</div>`;
+  }
+  document.getElementById('chat-fenetre').classList.add('ouverte');
+}
+
+const reponsesAuto = [
+  "Je suis disponible pour vous aider ! Pouvez-vous me donner plus de détails ?",
+  "Merci pour votre message. Je reviendrai vers vous très bientôt.",
+  "D'accord, je comprends votre besoin. Je peux me déplacer demain si cela vous convient.",
+  "Bien reçu ! Pour cette prestation, mon tarif est indicatif. On peut en discuter.",
+];
+
+function envoyerMsg() {
+  const input = document.getElementById('chat-input');
+  const texte = input.value.trim();
+  if (!texte) return;
+
+  const msgs = document.getElementById('chat-messages');
+  msgs.innerHTML += `<div class="msg msg-moi">${texte}</div>`;
+  input.value = '';
+  msgs.scrollTop = msgs.scrollHeight;
+
+  setTimeout(() => {
+    const rep = reponsesAuto[Math.floor(Math.random() * reponsesAuto.length)];
+    msgs.innerHTML += `<div class="msg msg-eux">${rep}</div>`;
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 900);
+}
+
+// Inscription / Ajout réel
+function previewPhoto(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('upload-contenu').innerHTML = `
+        <img src="${e.target.result}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;margin:0 auto;display:block;">
+        <p style="margin-top:8px; font-size:0.82rem; color:var(--gris-moyen);">Photo choisie ✓</p>
+      `;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function inscrire() {
+  const nom = document.getElementById('ins-nom').value.trim();
+  const tel = document.getElementById('ins-tel').value.trim();
+  const metier = document.getElementById('ins-metier').value;
+  const zone = document.getElementById('ins-zone').value.trim();
+  const tarif = document.getElementById('ins-tarif').value;
+  const desc = document.getElementById('ins-desc').value.trim();
+  const unite = document.getElementById('ins-unite').value;
+
+  if (!nom || !tel || !metier || !zone || !tarif) {
+    alert('Veuillez remplir tous les champs obligatoires (*).');
+    return;
+  }
+
+  // Création du nouveau prestataire
+  const nouveauPresta = {
+    id: Date.now(), // ID unique basé sur le timestamp
+    nom: nom,
+    metier: metier,
+    zone: zone,
+    tel: tel,
+    tarif: parseFloat(tarif),
+    unite: unite,
+    note: 0, 
+    avis: 0,
+    dispo: true,
+    desc: desc
+  };
+
+  // Ajout au tableau global et stockage local
+  prestataires.push(nouveauPresta);
+  localStorage.setItem('mw_prestataires', JSON.stringify(prestataires));
+
+  // Réinitialisation de l'affichage
+  prestatairesAffiches = [...prestataires];
+  renderGrille();
+
+  // Nettoyage du formulaire
+  document.getElementById('ins-nom').value = '';
+  document.getElementById('ins-tel').value = '';
+  document.getElementById('ins-metier').value = '';
+  document.getElementById('ins-zone').value = '';
+  document.getElementById('ins-tarif').value = '';
+  document.getElementById('ins-desc').value = '';
+  document.getElementById('upload-contenu').innerHTML = `
+    <div class="upload-icon">📷</div>
+    <p>Cliquez pour choisir une photo</p>
+    <p style="font-size:0.78rem; color:#aaa; margin-top:4px;">JPG, PNG — max 5 Mo</p>
+  `;
+
+  // Message de succès
+  document.getElementById('success-ins').classList.add('visible');
+  setTimeout(() => {
+    document.getElementById('success-ins').classList.remove('visible');
+  }, 5000);
+}
+
+// Initialisation au chargement
+renderGrille();
+</script>
+</body>
+</html>

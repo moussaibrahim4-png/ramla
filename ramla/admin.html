@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Maza-Wajé Services</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --rouge: #C0392B;
+    --rouge-sombre: #96281B;
+    --rouge-clair: #E8453C;
+    --gris: #2C2C2C;
+    --gris-moyen: #666;
+    --gris-clair: #F5F5F5;
+    --sidebar-bg: #1E1E1E;
+    --sidebar-w: 240px;
+    --blanc: #FFFFFF;
+    --bordure: #E0E0E0;
+    --ombre: 0 4px 20px rgba(0,0,0,0.07);
+    --radius: 12px;
+    --transition: all 0.22s ease;
+    --vert: #27AE60;
+    --orange: #E67E22;
+    --bleu: #2980B9;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #F0F0F0;
+    color: var(--gris);
+    min-height: 100vh;
+  }
+
+  /* ===== LOGIN ===== */
+  .login-screen {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--gris) 0%, #111 100%);
+  }
+
+  .login-box {
+    background: var(--blanc);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    width: 100%; max-width: 380px;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+  }
+
+  .login-logo {
+    text-align: center;
+    margin-bottom: 1.8rem;
+  }
+
+  .login-logo h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--gris);
+  }
+
+  .login-logo h1 span { color: var(--rouge); }
+  .login-logo p { color: var(--gris-moyen); font-size: 0.85rem; margin-top: 4px; }
+
+  .form-groupe { margin-bottom: 1.1rem; }
+  .form-groupe label {
+    display: block;
+    font-size: 0.83rem;
+    font-weight: 600;
+    color: var(--gris);
+    margin-bottom: 0.4rem;
+  }
+
+  .form-groupe input {
+    width: 100%;
+    border: 1.5px solid var(--bordure);
+    border-radius: 8px;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.92rem;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: var(--transition);
+    color: var(--gris);
+  }
+
+  .form-groupe input:focus {
+    border-color: var(--rouge);
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.1);
+  }
+
+  .btn-login {
+    width: 100%;
+    background: var(--rouge);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.85rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 0.5rem;
+  }
+
+  .btn-login:hover { background: var(--rouge-sombre); }
+
+  /* ===== LAYOUT ADMIN ===== */
+  .admin-layout {
+    display: none;
+    min-height: 100vh;
+  }
+
+  .admin-layout.visible { display: flex; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: var(--sidebar-bg);
+    display: flex; flex-direction: column;
+    position: fixed; top: 0; left: 0; bottom: 0;
+    z-index: 50;
+    overflow-y: auto;
+  }
+
+  .sidebar-logo {
+    padding: 1.5rem 1.2rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .sidebar-logo h2 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: white;
+    letter-spacing: -0.5px;
+  }
+
+  .sidebar-logo h2 span { color: var(--rouge-clair); }
+  .sidebar-logo p { font-size: 0.72rem; color: rgba(255,255,255,0.35); margin-top: 3px; text-transform: uppercase; letter-spacing: 1px; }
+
+  .sidebar-nav { padding: 1rem 0; flex: 1; }
+
+  .nav-section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.25);
+    padding: 0.75rem 1.2rem 0.4rem;
+  }
+
+  .nav-item {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.65rem 1.2rem;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    border-left: 3px solid transparent;
+    text-decoration: none;
+  }
+
+  .nav-item:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); }
+
+  .nav-item.active {
+    color: white;
+    background: rgba(192,57,43,0.15);
+    border-left-color: var(--rouge);
+  }
+
+  .nav-item .nav-icon { font-size: 1rem; width: 20px; text-align: center; }
+
+  .nav-badge {
+    margin-left: auto;
+    background: var(--rouge);
+    color: white;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 10px;
+    min-width: 18px;
+    text-align: center;
+  }
+
+  .sidebar-footer {
+    padding: 1rem 1.2rem;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .admin-user {
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+
+  .admin-avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--rouge);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .admin-user-info h4 { font-size: 0.82rem; color: white; font-weight: 600; }
+  .admin-user-info p { font-size: 0.72rem; color: rgba(255,255,255,0.4); }
+
+  .btn-deconnexion {
+    margin-left: auto;
+    background: rgba(255,255,255,0.08);
+    border: none;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .btn-deconnexion:hover { background: rgba(192,57,43,0.3); color: white; }
+
+  /* CONTENU PRINCIPAL */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    display: flex; flex-direction: column;
+  }
+
+  .topbar {
+    background: var(--blanc);
+    border-bottom: 1px solid var(--bordure);
+    padding: 0 2rem;
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 40;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .topbar-titre {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gris);
+  }
+
+  .topbar-actions { display: flex; gap: 0.75rem; align-items: center; }
+
+  .topbar-btn {
+    background: var(--gris-clair);
+    border: 1.5px solid var(--bordure);
+    border-radius: 8px;
+    padding: 0.45rem 1rem;
+    font-size: 0.83rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--gris);
+  }
+
+  .topbar-btn:hover { background: var(--bordure); }
+  .topbar-btn.rouge { background: var(--rouge); color: white; border-color: var(--rouge); }
+  .topbar-btn.rouge:hover { background: var(--rouge-sombre); }
+
+  .notif-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--rouge);
+    display: inline-block;
+    margin-left: 4px;
+  }
+
+  /* PAGES */
+  .page { display: none; padding: 2rem; }
+  .page.active { display: block; }
+
+  /* ===== DASHBOARD ===== */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .kpi-card {
+    background: var(--blanc);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.5rem;
+    box-shadow: var(--ombre);
+    border: 1.5px solid var(--bordure);
+    display: flex; align-items: center; gap: 1rem;
+    transition: var(--transition);
+  }
+
+  .kpi-card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.1); }
+
+  .kpi-icone {
+    width: 48px; height: 48px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+
+  .kpi-icone.rouge { background: rgba(192,57,43,0.1); }
+  .kpi-icone.vert { background: rgba(39,174,96,0.1); }
+  .kpi-icone.orange { background: rgba(230,126,34,0.1); }
+  .kpi-icone.bleu { background: rgba(41,128,185,0.1); }
+
+  .kpi-val {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--gris);
+    line-height: 1;
+  }
+
+  .kpi-label {
+    font-size: 0.8rem;
+    color: var(--gris-moyen);
+    margin-top: 3px;
+  }
+
+  .kpi-delta {
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  .delta-up { color: var(--vert); }
+  .delta-down { color: var(--rouge); }
+
+  /* Activité récente */
+  .dash-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .card {
+    background: var(--blanc);
+    border-radius: var(--radius);
+    box-shadow: var(--ombre);
+    border: 1.5px solid var(--bordure);
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--bordure);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .card-header h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gris);
+  }
+
+  .card-lien { font-size: 0.8rem; color: var(--rouge); cursor: pointer; font-weight: 600; }
+  .card-lien:hover { text-decoration: underline; }
+
+  .card-body { padding: 0; }
+
+  .list-item {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 0.9rem 1.5rem;
+    border-bottom: 1px solid var(--gris-clair);
+    transition: var(--transition);
+  }
+
+  .list-item:last-child { border-bottom: none; }
+  .list-item:hover { background: var(--gris-clair); }
+
+  .list-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--rouge);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .list-info { flex: 1; }
+  .list-nom { font-size: 0.88rem; font-weight: 600; color: var(--gris); }
+  .list-sous { font-size: 0.78rem; color: var(--gris-moyen); margin-top: 1px; }
+
+  .badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.25rem 0.7rem;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .badge-attente { background: #FFF3CD; color: #856404; }
+  .badge-valide { background: #D1FAE5; color: #065F46; }
+  .badge-refuse { background: #FEE2E2; color: #991B1B; }
+  .badge-suspendu { background: #F3F4F6; color: #374151; }
+  .badge-traite { background: #DBEAFE; color: #1E40AF; }
+
+  /* ===== PRESTATAIRES ===== */
+  .filtres-bar {
+    display: flex; gap: 0.75rem; flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    align-items: center;
+  }
+
+  .input-recherche {
+    border: 1.5px solid var(--bordure);
+    border-radius: 8px;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.88rem;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    min-width: 220px;
+    transition: var(--transition);
+  }
+
+  .input-recherche:focus { border-color: var(--rouge); }
+
+  .filtre-select {
+    border: 1.5px solid var(--bordure);
+    border-radius: 8px;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.88rem;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    cursor: pointer;
+    color: var(--gris);
+    background: white;
+  }
+
+  .table-wrap {
+    background: var(--blanc);
+    border-radius: var(--radius);
+    box-shadow: var(--ombre);
+    border: 1.5px solid var(--bordure);
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead { background: var(--gris-clair); }
+
+  th {
+    padding: 0.85rem 1rem;
+    text-align: left;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--gris-moyen);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 0.9rem 1rem;
+    font-size: 0.87rem;
+    border-bottom: 1px solid var(--gris-clair);
+    vertical-align: middle;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #FAFAFA; }
+
+  .td-nom { display: flex; align-items: center; gap: 0.65rem; }
+
+  .mini-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--rouge);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.72rem; font-weight: 700; color: white;
+    flex-shrink: 0;
+  }
+
+  .action-btns { display: flex; gap: 0.4rem; }
+
+  .btn-sm {
+    padding: 0.3rem 0.65rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Inter', sans-serif;
+  }
+
+  .btn-sm-vert { background: #D1FAE5; color: #065F46; }
+  .btn-sm-vert:hover { background: #A7F3D0; }
+  .btn-sm-rouge { background: #FEE2E2; color: #991B1B; }
+  .btn-sm-rouge:hover { background: #FECACA; }
+  .btn-sm-gris { background: var(--gris-clair); color: var(--gris); }
+  .btn-sm-gris:hover { background: var(--bordure); }
+  .btn-sm-bleu { background: #DBEAFE; color: #1E40AF; }
+  .btn-sm-bleu:hover { background: #BFDBFE; }
+
+  /* ===== DEMANDES ===== */
+  .demandes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .demande-card {
+    background: var(--blanc);
+    border-radius: var(--radius);
+    border: 1.5px solid var(--bordure);
+    box-shadow: var(--ombre);
+    overflow: hidden;
+    transition: var(--transition);
+  }
+
+  .demande-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+
+  .demande-header {
+    background: var(--gris-clair);
+    padding: 0.9rem 1.2rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .demande-id { font-size: 0.75rem; color: var(--gris-moyen); font-weight: 600; }
+
+  .demande-body { padding: 1.2rem; }
+
+  .demande-titre {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--gris);
+  }
+
+  .demande-info-row {
+    display: flex; gap: 0.5rem;
+    align-items: flex-start;
+    font-size: 0.83rem;
+    color: var(--gris-moyen);
+    margin-bottom: 0.4rem;
+  }
+
+  .demande-info-row strong { color: var(--gris); min-width: 70px; }
+
+  .demande-footer {
+    padding: 0.9rem 1.2rem;
+    border-top: 1px solid var(--gris-clair);
+    display: flex; gap: 0.5rem;
+  }
+
+  /* ===== AVIS ===== */
+  .avis-admin-card {
+    background: var(--blanc);
+    border-radius: var(--radius);
+    border: 1.5px solid var(--bordure);
+    padding: 1.2rem 1.5rem;
+    box-shadow: var(--ombre);
+    display: flex; gap: 1rem; align-items: flex-start;
+    transition: var(--transition);
+    margin-bottom: 1rem;
+  }
+
+  .avis-admin-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+
+  .avis-note-badge {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: #FFF3CD;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #856404;
+    flex-shrink: 0;
+  }
+
+  .avis-content { flex: 1; }
+  .avis-meta-admin {
+    display: flex; gap: 1rem; align-items: center;
+    margin-bottom: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .avis-meta-admin span { font-size: 0.8rem; color: var(--gris-moyen); }
+  .avis-meta-admin strong { font-size: 0.88rem; color: var(--gris); }
+  .avis-texte { font-size: 0.88rem; color: var(--gris-moyen); line-height: 1.5; }
+
+  /* ===== MODAL VALIDATION ===== */
+  .overlay-modal {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    align-items: center; justify-content: center;
+    padding: 1rem;
+    backdrop-filter: blur(4px);
+  }
+
+  .overlay-modal.actif { display: flex; }
+
+  .modal-admin {
+    background: var(--blanc);
+    border-radius: 16px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+    overflow: hidden;
+  }
+
+  .modal-admin-header {
+    background: var(--gris);
+    padding: 1.4rem 1.8rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .modal-admin-header h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  .modal-admin-header button {
+    background: rgba(255,255,255,0.1);
+    border: none; color: white; cursor: pointer;
+    width: 30px; height: 30px; border-radius: 50%;
+    font-size: 1rem; display: flex; align-items: center; justify-content: center;
+    transition: var(--transition);
+  }
+
+  .modal-admin-header button:hover { background: rgba(255,255,255,0.2); }
+
+  .modal-admin-body { padding: 1.5rem 1.8rem 2rem; }
+
+  .profil-modal-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.75rem; margin-bottom: 1.5rem;
+  }
+
+  .info-bloc {
+    background: var(--gris-clair);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+  }
+
+  .info-bloc label { display: block; font-size: 0.72rem; color: var(--gris-moyen); margin-bottom: 2px; }
+  .info-bloc strong { font-size: 0.9rem; color: var(--gris); font-weight: 600; }
+
+  .modal-admin-footer {
+    display: flex; gap: 0.75rem;
+    padding: 1rem 1.8rem 1.5rem;
+    border-top: 1px solid var(--gris-clair);
+  }
+
+  /* Toast */
+  .toast-container {
+    position: fixed; bottom: 1.5rem; right: 1.5rem;
+    z-index: 500;
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+
+  .toast {
+    background: var(--gris);
+    color: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    display: flex; align-items: center; gap: 0.5rem;
+    animation: slideIn 0.3s ease;
+    min-width: 220px;
+  }
+
+  .toast.vert { background: #065F46; }
+  .toast.rouge { background: var(--rouge); }
+  .toast.orange { background: #92400E; }
+
+  @keyframes slideIn {
+    from { transform: translateX(40px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  /* Graphique simple */
+  .chart-bars {
+    display: flex; align-items: flex-end; gap: 8px;
+    height: 100px;
+    padding: 0 1.5rem 0.5rem;
+  }
+
+  .bar-col { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+
+  .bar {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    background: linear-gradient(to top, var(--rouge), var(--rouge-clair));
+    transition: height 0.4s ease;
+    min-height: 4px;
+  }
+
+  .bar-label { font-size: 0.68rem; color: var(--gris-moyen); }
+
+  /* Scroll */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 10px; }
+
+  @media (max-width: 900px) {
+    :root { --sidebar-w: 200px; }
+    .dash-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+    .demandes-grid { grid-template-columns: 1fr; }
+    .profil-modal-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="login-screen" id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <h1>Maza-Wajé <span>Admin</span></h1>
+      <p>Panneau d'administration — Services</p>
+    </div>
+    <div class="form-groupe">
+      <label>Identifiant</label>
+      <input type="text" id="login-user" placeholder="Entrez votre identifiant" value="">
+    </div>
+    <div class="form-groupe">
+      <label>Mot de passe</label>
+      <input type="password" id="login-pass" placeholder="••••••••" value="" onkeydown="if(event.key==='Enter') connexion()">
+    </div>
+    <button class="btn-login" onclick="connexion()">Connexion</button>
+  </div>
+</div>
+
+<div class="admin-layout" id="admin-layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <h2>Maza-Wajé <span>Services</span></h2>
+      <p>Administration</p>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Principal</div>
+      <div class="nav-item active" id="nav-dashboard" onclick="goPage('dashboard', this)">
+        <span class="nav-icon">📊</span> Tableau de bord
+      </div>
+      <div class="nav-item" id="nav-prestataires" onclick="goPage('prestataires', this)">
+        <span class="nav-icon">👷</span> Prestataires
+        <span class="nav-badge" id="badge-attente">0</span>
+      </div>
+      <div class="nav-section-label">Activité</div>
+      <div class="nav-item" onclick="goPage('demandes', this)">
+        <span class="nav-icon">📋</span> Demandes / Devis
+        <span class="nav-badge" id="badge-demandes">0</span>
+      </div>
+      <div class="nav-item" onclick="goPage('reservations', this)">
+        <span class="nav-icon">📅</span> Réservations
+      </div>
+      <div class="nav-item" onclick="goPage('avis', this)">
+        <span class="nav-icon">⭐</span> Avis clients
+        <span class="nav-badge" id="badge-avis">0</span>
+      </div>
+      <div class="nav-section-label">Paramètres</div>
+      <div class="nav-item" onclick="goPage('parametres', this)">
+        <span class="nav-icon">⚙️</span> Paramètres
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="admin-user">
+        <div class="admin-avatar">AD</div>
+        <div class="admin-user-info">
+          <h4>Administrateur</h4>
+          <p>Super admin</p>
+        </div>
+        <button class="btn-deconnexion" onclick="deconnexion()">↩</button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-titre" id="topbar-titre">Tableau de bord</div>
+      <div class="topbar-actions">
+        <button class="topbar-btn" onclick="goPage('prestataires', document.getElementById('nav-prestataires'))">
+          👷 Prestataires en attente <span class="notif-dot" id="topbar-dot" style="display:none;"></span>
+        </button>
+        <a href="mazawaje-services.html" target="_blank" class="topbar-btn rouge" style="text-decoration:none;">🌐 Voir le site</a>
+      </div>
+    </div>
+
+    <div class="page active" id="page-dashboard">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icone vert">👷</div>
+          <div>
+            <div class="kpi-val" id="kpi-actifs">0</div>
+            <div class="kpi-label">Prestataires actifs</div>
+            <div class="kpi-delta delta-up">—</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icone orange">⏳</div>
+          <div>
+            <div class="kpi-val" id="kpi-attente">0</div>
+            <div class="kpi-label">En attente de validation</div>
+            <div class="kpi-delta delta-down" id="kpi-attente-sub">Aucun</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icone bleu">📋</div>
+          <div>
+            <div class="kpi-val" id="kpi-demandes">0</div>
+            <div class="kpi-label">Demandes ce mois</div>
+            <div class="kpi-delta delta-up">—</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icone rouge">⭐</div>
+          <div>
+            <div class="kpi-val">0.0</div>
+            <div class="kpi-label">Note moyenne</div>
+            <div class="kpi-delta delta-up">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-header">
+          <h3>Demandes — 7 derniers jours</h3>
+        </div>
+        <div class="card-body" style="padding:1rem 1.5rem 0.5rem;">
+          <div class="chart-bars" id="chart-bars"></div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="card">
+          <div class="card-header">
+            <h3>Inscriptions récentes</h3>
+            <span class="card-lien" onclick="goPage('prestataires', document.getElementById('nav-prestataires'))">Voir tout →</span>
+          </div>
+          <div class="card-body" id="dash-inscriptions"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>Dernières demandes</h3>
+            <span class="card-lien" onclick="goPage('demandes', document.querySelector('.nav-item:nth-child(4)'))">Voir tout →</span>
+          </div>
+          <div class="card-body" id="dash-demandes"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="page-prestataires">
+      <div class="filtres-bar">
+        <input type="text" class="input-recherche" placeholder="Rechercher un prestataire..." oninput="filtrerPrestataires(this.value)">
+        <select class="filtre-select" onchange="filtrerStatut(this.value)">
+          <option value="">Tous les statuts</option>
+          <option value="valide">Validés</option>
+          <option value="attente">En attente</option>
+          <option value="suspendu">Suspendus</option>
+        </select>
+        <select class="filtre-select" onchange="filtrerMetierAdmin(this.value)">
+          <option value="">Tous les métiers</option>
+          <option value="plombier">Plombier</option>
+          <option value="electricien">Électricien</option>
+          <option value="chauffeur">Chauffeur</option>
+          <option value="frigoriste">Frigo/Clim</option>
+          <option value="jardinier">Jardinier</option>
+          <option value="menuisier">Menuisier</option>
+          <option value="peintre">Peintre</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table id="table-prestataires">
+          <thead>
+            <tr>
+              <th>Prestataire</th>
+              <th>Métier</th>
+              <th>Téléphone</th>
+              <th>Zone</th>
+              <th>Tarif</th>
+              <th>Note</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-prestataires"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="page" id="page-demandes">
+      <div class="filtres-bar" style="margin-bottom:1.5rem;">
+        <select class="filtre-select" onchange="filtrerDemandes(this.value)">
+          <option value="">Toutes les demandes</option>
+          <option value="nouveau">Nouvelles</option>
+          <option value="traite">Traitées</option>
+        </select>
+      </div>
+      <div class="demandes-grid" id="grille-demandes"></div>
+    </div>
+
+    <div class="page" id="page-reservations">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Réf.</th>
+              <th>Client</th>
+              <th>Prestataire</th>
+              <th>Service</th>
+              <th>Date</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-reservations"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="page" id="page-avis">
+      <div id="liste-avis-admin"></div>
+    </div>
+
+    <div class="page" id="page-parametres">
+      <div class="card" style="max-width:500px;">
+        <div class="card-header"><h3>⚙️ Paramètres généraux</h3></div>
+        <div class="modal-admin-body">
+          <div class="form-groupe">
+            <label>Nom de la plateforme</label>
+            <input type="text" class="input-recherche" style="width:100%" value="Maza-Wajé Services">
+          </div>
+          <div class="form-groupe">
+            <label>Téléphone de contact</label>
+            <input type="text" class="input-recherche" style="width:100%" value="95 14 32 32">
+          </div>
+          <div class="form-groupe">
+            <label>Email de contact</label>
+            <input type="email" class="input-recherche" style="width:100%" value="contact@mazawaje-services.ne">
+          </div>
+          <div class="form-groupe">
+            <label>Ville principale</label>
+            <input type="text" class="input-recherche" style="width:100%" value="Niamey, Niger">
+          </div>
+          <button class="topbar-btn rouge" style="margin-top:0.5rem;" onclick="toast('Paramètres sauvegardés ✅', 'vert')">Sauvegarder</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="overlay-modal" id="overlay-profil-admin" onclick="if(event.target===this) fermerModalAdmin()">
+  <div class="modal-admin">
+    <div class="modal-admin-header">
+      <h2 id="ma-titre">Profil prestataire</h2>
+      <button onclick="fermerModalAdmin()">✕</button>
+    </div>
+    <div class="modal-admin-body">
+      <div class="profil-modal-grid">
+        <div class="info-bloc"><label>Nom complet</label><strong id="ma-nom"></strong></div>
+        <div class="info-bloc"><label>Téléphone</label><strong id="ma-tel"></strong></div>
+        <div class="info-bloc"><label>Métier</label><strong id="ma-metier"></strong></div>
+        <div class="info-bloc"><label>Zone d'intervention</label><strong id="ma-zone"></strong></div>
+        <div class="info-bloc"><label>Tarif</label><strong id="ma-tarif"></strong></div>
+        <div class="info-bloc"><label>Note moyenne</label><strong id="ma-note"></strong></div>
+        <div class="info-bloc"><label>Statut actuel</label><strong id="ma-statut"></strong></div>
+        <div class="info-bloc"><label>Nb. avis</label><strong id="ma-avis"></strong></div>
+      </div>
+      <div class="info-bloc" style="margin-bottom:0.75rem;">
+        <label>Description</label>
+        <strong id="ma-desc" style="font-weight:400; line-height:1.5;"></strong>
+      </div>
+    </div>
+    <div class="modal-admin-footer" id="ma-footer"></div>
+  </div>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+<script>
+// ===== TABLEAUX DE DONNÉES ENTIÈREMENT VIERGES =====
+let prestatairesAdmin = [];
+let demandesData = [];
+let reservationsData = [];
+let avisAdmin = [];
+
+// ===== HELPERS =====
+function initiales(nom) {
+  if (!nom) return "?";
+  return nom.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2);
+}
+
+function badgeStatut(s) {
+  const map = {
+    attente: ['badge-attente','⏳ En attente'],
+    valide: ['badge-valide','✅ Validé'],
+    refuse: ['badge-refuse','❌ Refusé'],
+    suspendu: ['badge-suspendu','🔒 Suspendu'],
+    traite: ['badge-traite','✔ Traité'],
+    nouveau: ['badge-attente','🆕 Nouveau'],
+  };
+  const [cls, lbl] = map[s] || ['badge-attente', s];
+  return `<span class="badge ${cls}">${lbl}</span>`;
+}
+
+// ===== LOGIN SÉCURISÉ (À CONFIGURER AVEC SUPABASE PLUS TARD) =====
+function connexion() {
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value.trim();
+  
+  // Remplacer ces lignes lors de la connexion à la BDD
+  if (u === 'admin' && p === 'admin123') {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-layout').classList.add('visible');
+    initDashboard();
+    renderTablePrestataires();
+    renderDemandes();
+    renderReservations();
+    renderAvis();
+  } else {
+    toast('Identifiants incorrects ❌', 'rouge');
+  }
+}
+
+function deconnexion() {
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+  document.getElementById('admin-layout').classList.remove('visible');
+  document.getElementById('login-screen').style.display = 'flex';
+}
+
+// ===== NAVIGATION =====
+function goPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (el) {
+    el.classList.add('active');
+  } else {
+    const fallback = document.getElementById('nav-' + id);
+    if(fallback) fallback.classList.add('active');
+  }
+
+  const titres = {
+    dashboard: 'Tableau de bord',
+    prestataires: 'Gestion des prestataires',
+    demandes: 'Demandes & Devis',
+    reservations: 'Réservations',
+    avis: 'Avis clients',
+    parametres: 'Paramètres',
+  };
+  document.getElementById('topbar-titre').textContent = titres[id] || '';
+}
+
+// ===== DASHBOARD PRINCIPAL =====
+function initDashboard() {
+  // Graphique (vide/neutre par défaut)
+  const jours = ['L','M','M','J','V','S','D'];
+  const vals = [0, 0, 0, 0, 0, 0, 0];
+  const bars = document.getElementById('chart-bars');
+  if(bars) {
+    bars.innerHTML = jours.map((j, i) => `
+      <div class="bar-col">
+        <div class="bar" style="height: 4px"></div>
+        <div class="bar-label">${j}</div>
+      </div>
+    `).join('');
+  }
+
+  // Calculs dynamiques basés sur les tableaux (à vide = 0)
+  const actifs = prestatairesAdmin.filter(p => p.statut === 'valide').length;
+  const attenteNb = prestatairesAdmin.filter(p => p.statut === 'attente').length;
+  const demandesNb = demandesData.length;
+  
+  if(document.getElementById('kpi-actifs')) document.getElementById('kpi-actifs').textContent = actifs;
+  if(document.getElementById('kpi-attente')) document.getElementById('kpi-attente').textContent = attenteNb;
+  if(document.getElementById('kpi-demandes')) document.getElementById('kpi-demandes').textContent = demandesNb;
+  if(document.getElementById('kpi-attente-sub')) {
+    document.getElementById('kpi-attente-sub').textContent = attenteNb > 0 ? `${attenteNb} à traiter` : 'Aucun';
+  }
+
+  // Badges latéraux
+  if(document.getElementById('badge-attente')) document.getElementById('badge-attente').textContent = attenteNb;
+  if(document.getElementById('badge-demandes')) document.getElementById('badge-demandes').textContent = demandesNb;
+  if(document.getElementById('badge-avis')) document.getElementById('badge-avis').textContent = avisAdmin.length;
+  
+  // Pastille de notification Topbar
+  const dot = document.getElementById('topbar-dot');
+  if(dot) dot.style.display = attenteNb > 0 ? 'inline-block' : 'none';
+
+  // Liste Inscriptions récentes (Dashboard)
+  const ins = document.getElementById('dash-inscriptions');
+  if(ins) {
+    const attenteList = prestatairesAdmin.filter(p => p.statut === 'attente').slice(0, 4);
+    ins.innerHTML = attenteList.map(p => `
+      <div class="list-item">
+        <div class="list-avatar">${initiales(p.nom)}</div>
+        <div class="list-info">
+          <div class="list-nom">${p.nom}</div>
+          <div class="list-sous">${p.icone || '👷'} ${p.label || p.metier} — ${p.zone}</div>
+        </div>
+        ${badgeStatut(p.statut)}
+      </div>
+    `).join('') || '<div style="padding:1.5rem; color:var(--gris-moyen); font-size:0.85rem; text-align:center;">Aucune inscription en attente. 🎉</div>';
+  }
+
+  // Liste Demandes récentes (Dashboard)
+  const dem = document.getElementById('dash-demandes');
+  if(dem) {
+    dem.innerHTML = demandesData.slice(0,4).map(d => `
+      <div class="list-item">
+        <div class="list-avatar" style="background:var(--bleu)">${d.client.slice(0,2).toUpperCase()}</div>
+        <div class="list-info">
+          <div class="list-nom">${d.client}</div>
+          <div class="list-sous">${d.service}</div>
+        </div>
+        ${badgeStatut(d.statut)}
+      </div>
+    `).join('') || '<div style="padding:1.5rem; color:var(--gris-moyen); font-size:0.85rem; text-align:center;">Aucune demande reçue.</div>';
+  }
+}
+
+// ===== PRESTATAIRES =====
+let filtreRecherche = '';
+let filtreStatutAdmin = '';
+let filtreMetierAdminVal = '';
+
+function renderTablePrestataires() {
+  let liste = prestatairesAdmin.filter(p =>
+    (!filtreRecherche || p.nom.toLowerCase().includes(filtreRecherche) || p.zone.toLowerCase().includes(filtreRecherche)) &&
+    (!filtreStatutAdmin || p.statut === filtreStatutAdmin) &&
+    (!filtreMetierAdminVal || p.metier === filtreMetierAdminVal)
+  );
+
+  const tbody = document.getElementById('tbody-prestataires');
+  if(!tbody) return;
+
+  if (liste.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:var(--gris-moyen); padding:2.5rem;">Aucun prestataire enregistré pour le moment.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = liste.map(p => `
+    <tr>
+      <td><div class="td-nom"><div class="mini-avatar">${initiales(p.nom)}</div><div><div style="font-weight:600">${p.nom}</div><div style="font-size:0.75rem;color:var(--gris-moyen)">${p.tel}</div></div></div></td>
+      <td>${p.icone || '👷'} ${p.label || p.metier}</td>
+      <td>${p.tel}</td>
+      <td>${p.zone}</td>
+      <td>${parseInt(p.tarif).toLocaleString('fr-FR')} F CFA / ${p.unite}</td>
+      <td>${p.note > 0 ? '⭐ ' + p.note + ' ('+p.avis+')' : '—'}</td>
+      <td>${badgeStatut(p.statut)}</td>
+      <td>
+        <div class="action-btns">
+          <button class="btn-sm btn-sm-bleu" onclick="voirProfil(${p.id})">👁 Voir</button>
+          ${p.statut === 'attente' ? `<button class="btn-sm btn-sm-vert" onclick="changerStatut(${p.id},'valide')">✅ Valider</button><button class="btn-sm btn-sm-rouge" onclick="changerStatut(${p.id},'refuse')">❌ Refuser</button>` : ''}
+          ${p.statut === 'valide' ? `<button class="btn-sm btn-sm-gris" onclick="changerStatut(${p.id},'suspendu')">🔒 Suspendre</button>` : ''}
+          ${p.statut === 'suspendu' ? `<button class="btn-sm btn-sm-vert" onclick="changerStatut(${p.id},'valide')">↩ Réactiver</button>` : ''}
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function filtrerPrestataires(val) { filtreRecherche = val.toLowerCase(); renderTablePrestataires(); }
+function filtrerStatut(val) { filtreStatutAdmin = val; renderTablePrestataires(); }
+function filtrerMetierAdmin(val) { filtreMetierAdminVal = val; renderTablePrestataires(); }
+
+function changerStatut(id, statut) {
+  const p = prestatairesAdmin.find(x => x.id === id);
+  if (!p) return;
+  p.statut = statut;
+  
+  renderTablePrestataires();
+  initDashboard();
+  
+  const msgs = {
+    valide: `✅ ${p.nom} est désormais visible en ligne.`,
+    refuse: `❌ ${p.nom} a été refusé.`,
+    suspendu: `🔒 Le profil de ${p.nom} a été suspendu.`,
+  };
+  toast(msgs[statut] || 'Statut mis à jour.', statut === 'valide' ? 'vert' : statut === 'refuse' ? 'rouge' : '');
+}
+
+function voirProfil(id) {
+  const p = prestatairesAdmin.find(x => x.id === id);
+  if (!p) return;
+
+  document.getElementById('ma-titre').textContent = `Profil — ${p.nom}`;
+  document.getElementById('ma-nom').textContent = p.nom;
+  document.getElementById('ma-tel').textContent = p.tel;
+  document.getElementById('ma-metier').textContent = `${p.icone || '👷'} ${p.label || p.metier}`;
+  document.getElementById('ma-zone').textContent = p.zone;
+  document.getElementById('ma-tarif').textContent = `${parseInt(p.tarif).toLocaleString('fr-FR')} F CFA / ${p.unite}`;
+  document.getElementById('ma-note').textContent = p.note > 0 ? `⭐ ${p.note} (${p.avis} avis)` : 'Pas encore noté';
+  document.getElementById('ma-statut').innerHTML = badgeStatut(p.statut);
+  document.getElementById('ma-avis').textContent = p.avis || 0;
+  document.getElementById('ma-desc').textContent = p.desc || "Aucune description fournie.";
+
+  let footer = '';
+  if (p.statut === 'attente') {
+    footer = `<button class="topbar-btn rouge" onclick="changerStatut(${p.id},'valide'); fermerModalAdmin()">✅ Valider et mettre en ligne</button><button class="topbar-btn" onclick="changerStatut(${p.id},'refuse'); fermerModalAdmin()">❌ Refuser</button>`;
+  } else if (p.statut === 'valide') {
+    footer = `<button class="topbar-btn" onclick="changerStatut(${p.id},'suspendu'); fermerModalAdmin()">🔒 Suspendre le compte</button>`;
+  } else if (p.statut === 'suspendu') {
+    footer = `<button class="topbar-btn rouge" onclick="changerStatut(${p.id},'valide'); fermerModalAdmin()">↩ Réactiver</button>`;
+  }
+
+  document.getElementById('ma-footer').innerHTML = footer || '<span style="font-size:0.82rem;color:var(--gris-moyen);">Aucune action requise.</span>';
+  document.getElementById('overlay-profil-admin').classList.add('actif');
+}
+
+function fermerModalAdmin() {
+  document.getElementById('overlay-profil-admin').classList.remove('actif');
+}
+
+// ===== DEMANDES =====
+let filtreDemandeStatut = '';
+
+function renderDemandes() {
+  let liste = filtreDemandeStatut ? demandesData.filter(d => d.statut === filtreDemandeStatut) : demandesData;
+  const grille = document.getElementById('grille-demandes');
+  if(!grille) return;
+  
+  if (liste.length === 0) {
+    grille.innerHTML = '<div style="grid-column:1/-1; text-align:center; color:var(--gris-moyen); padding:3rem; background:white; border-radius:12px; border:1.5px solid var(--bordure);">Aucune demande client enregistrée.</div>';
+    return;
+  }
+
+  grille.innerHTML = liste.map(d => `
+    <div class="demande-card">
+      <div class="demande-header">
+        <span class="demande-id">${d.id}</span>
+        ${badgeStatut(d.statut)}
+      </div>
+      <div class="demande-body">
+        <div class="demande-titre">${d.service}</div>
+        <div class="demande-info-row"><strong>Client :</strong> ${d.client}</div>
+        <div class="demande-info-row"><strong>Tél :</strong> ${d.tel}</div>
+        <div class="demande-info-row"><strong>Prestataire :</strong> ${d.prestataire}</div>
+        <div class="demande-info-row"><strong>Date :</strong> ${d.date}</div>
+        <div class="demande-info-row"><strong>Adresse :</strong> ${d.adresse}</div>
+        <div class="demande-info-row"><strong>Message :</strong> ${d.msg}</div>
+      </div>
+      <div class="demande-footer">
+        ${d.statut === 'nouveau' ? `<button class="btn-sm btn-sm-vert" onclick="traiterDemande('${d.id}')">✔ Marquer traité</button>` : ''}
+        <button class="btn-sm btn-sm-gris">📞 Contacter</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filtrerDemandes(val) { filtreDemandeStatut = val; renderDemandes(); }
+
+function traiterDemande(id) {
+  const d = demandesData.find(x => x.id === id);
+  if (d) { d.statut = 'traite'; renderDemandes(); initDashboard(); toast('Demande marquée comme traitée ✔', 'vert'); }
+}
+
+// ===== RESERVATIONS =====
+function renderReservations() {
+  const tbody = document.getElementById('tbody-reservations');
+  if(!tbody) return;
+
+  if (reservationsData.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--gris-moyen); padding:2.5rem;">Aucune réservation planifiée.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = reservationsData.map(r => `
+    <tr>
+      <td style="font-weight:600;">${r.ref}</td>
+      <td>${r.client}</td>
+      <td>${r.prestataire}</td>
+      <td>${r.service}</td>
+      <td>${r.date}</td>
+      <td>${badgeStatut(r.statut)}</td>
+      <td>
+        <div class="action-btns">
+          <button class="btn-sm btn-sm-bleu">👁 Détails</button>
+          ${r.statut === 'attente' ? `<button class="btn-sm btn-sm-vert">✅ Confirmer</button>` : ''}
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ===== AVIS CLIENTS =====
+function renderAvis() {
+  const liste = document.getElementById('liste-avis-admin');
+  if(!liste) return;
+
+  if (avisAdmin.length === 0) {
+    liste.innerHTML = '<div style="text-align:center; color:var(--gris-moyen); padding:3rem; background:white; border-radius:12px; border:1.5px solid var(--bordure);">Aucun avis client soumis.</div>';
+    return;
+  }
+
+  liste.innerHTML = avisAdmin.map((a, i) => `
+    <div class="avis-admin-card">
+      <div class="avis-note-badge">${'★'.repeat(a.note)}</div>
+      <div class="avis-content">
+        <div class="avis-meta-admin">
+          <strong>${a.auteur}</strong>
+          <span>→ ${a.prestataire}</span>
+          <span>${a.date}</span>
+          ${badgeStatut(a.statut)}
+        </div>
+        <div class="avis-texte">${a.texte}</div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:0.4rem; flex-shrink:0;">
+        ${a.statut === 'attente' ? `<button class="btn-sm btn-sm-vert" onclick="validerAvis(${i})">✅ Publier</button><button class="btn-sm btn-sm-rouge" onclick="supprimerAvis(${i})">🗑 Supprimer</button>` : ''}
+        ${a.statut === 'valide' ? `<button class="btn-sm btn-sm-rouge" onclick="supprimerAvis(${i})">🗑 Retirer du site</button>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function validerAvis(i) {
+  avisAdmin[i].statut = 'valide';
+  renderAvis();
+  initDashboard();
+  toast('Avis publié et visible en ligne ✅', 'vert');
+}
+
+function supprimerAvis(i) {
+  avisAdmin.splice(i, 1);
+  renderAvis();
+  initDashboard();
+  toast('Avis supprimé définitivement.', '');
+}
+
+// ===== TOASTS NOTIFICATIONS =====
+function toast(msg, type='') {
+  const c = document.getElementById('toast-container');
+  if(!c) return;
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+</script>
+</body>
+</html>
